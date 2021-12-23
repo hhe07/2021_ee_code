@@ -17,3 +17,17 @@ to include construction of other lines
 - insert speed (destructive is just special case?)
   - replacement? is that the same as destructive?
   - append: special case at end
+
+
+
+
+
+
+
+
+
+
+
+
+
+

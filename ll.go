@@ -20,8 +20,26 @@ func (dl *DoubleLink) TReverse() *DoubleLink {
 	return dl.Prior
 }
 
-func (dl *DoubleLink) Link(d *DoubleLink) {
-	// Links the new node to the right 
+func (dl *DoubleLink) DelinkL() {
+	dl.Prior.Next = nil
+	dl.Prior = nil
+}
+
+func (dl *DoubleLink) DelinkR() {
+	dl.Next.Prior = nil
+	dl.Next = nil
+}
+
+func (dl *DoubleLink) LinkL(d *DoubleLink) {
+	// Links the new node to the left
+	d.Next = dl
+	dl.Prior = d
+}
+
+func (dl *DoubleLink) LinkR(d *DoubleLink) {
+	// Links the new node to the right
+	d.Prior = dl
+	dl.Next = d
 }
 
 type DoublyLinkedList struct {
@@ -115,9 +133,8 @@ func (dll *DoublyLinkedList) Insert(i int, r rune) error {
 		dll.Head = &nl
 	} else if i == dll.Length {
 		// case: end
-		nl.Prior = dll.End
-		dll.End.Next = &nl
-		dll.End = &nl
+		dll.End.LinkR(&nl)
+		dll.End = dll.End.Next
 	} else {
 		p, _ := dll.TraverseTo(i - 1)
 		a := p.Next
@@ -151,8 +168,7 @@ func (dll *DoublyLinkedList) Split(i int) (*DoublyLinkedList, error) {
 	}
 	splitStartNode := splitEndNode.Next
 
-	splitEndNode.Next = nil
-	splitStartNode.Prior = nil
+	splitEndNode.DelinkR()
 	right := &DoublyLinkedList{
 		Head:   splitStartNode,
 		End:    dll.End,

@@ -1,0 +1,24 @@
+digraph structs {
+  node [shape=Mrecord];
+  6 [label="<name> []int32 |{<6index0> 0|<6value0> 97}|{<6index1> 1|<6value1> 98}|{<6index2> 2|<6value2> 99} "];
+  5 [label="<name> AVLNode |<f0> Value|{<f1> Height | 0} |{<f2> Weight | 3} |{<f3> L | *main.AVLNode(nil)} |{<f4> R | *main.AVLNode(nil)} |<f5> U "];
+  5:f0 -> 6:name;
+  5:f5 -> 3:name;
+  7 [label="<name> AVLNode |{<f0> Value | {{<8index0> 0|<8value0> 100}|{<8index1> 1|<8value1> 101}}} |{<f1> Height | 0} |{<f2> Weight | 2} |{<f3> L | *main.AVLNode(nil)} |{<f4> R | *main.AVLNode(nil)} |<f5> U "];
+  7:f5 -> 3:name;
+  3 [label="<name> AVLNode |{<f0> Value | []int32\{\}} |{<f1> Height | 1} |{<f2> Weight | 3} |<f3> L|<f4> R|<f5> U "];
+  3:f3 -> 5:name;
+  3:f4 -> 7:name;
+  3:f5 -> 1:name;
+  11 [label="<name> AVLNode |{<f0> Value | {{<12index0> 0|<12value0> 102}|{<12index1> 1|<12value1> 103}}} |{<f1> Height | 0} |{<f2> Weight | 2} |{<f3> L | *main.AVLNode(nil)} |{<f4> R | *main.AVLNode(nil)} |<f5> U "];
+  11:f5 -> 9:name;
+  13 [label="<name> AVLNode |{<f0> Value | {{<14index0> 0|<14value0> 104}|{<14index1> 1|<14value1> 105}}} |{<f1> Height | 0} |{<f2> Weight | 2} |{<f3> L | *main.AVLNode(nil)} |{<f4> R | *main.AVLNode(nil)} |<f5> U "];
+  13:f5 -> 9:name;
+  9 [label="<name> AVLNode |{<f0> Value | []int32\{\}} |{<f1> Height | 1} |{<f2> Weight | 2} |<f3> L|<f4> R|<f5> U "];
+  9:f3 -> 11:name;
+  9:f4 -> 13:name;
+  9:f5 -> 1:name;
+  1 [label="<name> AVLNode |{<f0> Value | []int32\{\}} |{<f1> Height | 2} |{<f2> Weight | 5} |<f3> L|<f4> R|{<f5> U | *main.AVLNode(nil)}  "];
+  1:f3 -> 3:name;
+  1:f4 -> 9:name;
+}

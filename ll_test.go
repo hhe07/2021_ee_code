@@ -21,6 +21,4 @@ func TestInsert(t *testing.T) {
 	//ll.Swap(1, 2)
 	//fmt.Println(ll.ToString())
 
-
-
 }
