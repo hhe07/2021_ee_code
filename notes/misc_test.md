@@ -1,88 +1,6 @@
-package main
+Miscellaneous rope tests during development
 
-import (
-	"fmt"
-	"io"
-	"log"
-	"os"
-	"sort"
-)
-
-func PrintInline(head *AVLNode) {
-	/*
-		Given the ``head`` of an AVL Rope, print out the non-nil items in order.
-	*/
-	r := make([]string, 0)
-	head.ApplyInorder(func(n *AVLNode) { r = append(r, (string)(n.Value)) })
-	for _, e := range r {
-		fmt.Printf("%s,", e)
-
-	}
-	fmt.Println()
-}
-
-func LeavesOnly(head *AVLNode) []*AVLNode {
-	/*
-		Given the ``head`` of an AVL Rope, verify that only leaves store data. Returns offenders.
-	*/
-	r := true
-	ret := make([]*AVLNode, 0)
-	head.ApplyInorder(func(n *AVLNode) {
-		if !n.IsLeaf() && n.Value != nil {
-			r = false
-			ret = append(ret, n)
-		}
-	})
-	fmt.Printf("Leaves only? %t\n", r)
-	return ret
-}
-
-func IntAbs(i int) int {
-	if i < 0 {
-		return -i
-	}
-	return i
-}
-
-func CheckAVL(head *AVLNode) []*AVLNode {
-	/*
-		Given the ``head`` of an AVL Rope, verify that it conforms to AVL specifications. Returns offenders.
-	*/
-	r := true
-	ret := make([]*AVLNode, 0)
-	head.ApplyInorder(func(n *AVLNode) {
-		if IntAbs(n.L.getHeight()-n.R.getHeight()) > 1 {
-			r = false
-			ret = append(ret, n)
-		}
-	})
-	fmt.Printf("AVL? %t", r)
-	return ret
-}
-
-func TreeStats(head *AVLNode) {
-	// Print out tree stats
-	leafct := 0
-	nodect := 0
-	heightcts := make([]int, 0)
-	head.ApplyInorder(func(n *AVLNode) {
-		if n.IsLeaf() {
-
-			leafct++
-			tmp := n.U
-			ht := 0
-			for tmp != nil {
-				ht++
-				tmp = tmp.U
-			}
-			heightcts = append(heightcts, ht)
-		}
-		nodect++
-	})
-	sort.Ints(heightcts)
-	fmt.Printf("Leaf Ct: %d \n Node Ct: %d \n Max Height: %d\n", leafct, nodect, heightcts[len(heightcts)-1])
-}
-
+/*
 func main() {
 	// testing block for rotation left
 	/*
@@ -197,48 +115,73 @@ func main() {
 		CheckAVL(r)
 	*/
 
-	// testing ranged reports
-	file, err := os.Open("test.txt")
-	defer file.Close()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// The file.Read() function will happily read a tiny file in to a large
-	// byte slice, but io.ReadFull() will return an
-	// error if the file is smaller than the byte slice.
-	byteSlice := make([]byte, 90)
-	_, err = io.ReadFull(file, byteSlice)
-	if err != nil {
-		log.Fatal(err)
-	}
-	r := mkRope()
-	r.Load(byteSlice)
-	res, err := r.ReportRange(0, 11)
-	if err != nil {
-		return
-	}
-	PrintInline(r.Head)
-	fmt.Printf("/%s/", string(res))
-}
-
-/*
-func CheckHeight(head *AVLNode) []*AVLNode {
-
-	//	Given the ``head`` of an AVL Rope, verify that all heights are accurate (with leaves being height 0). Returns offenders.
-
-	r := true
-	ret := make([]*AVLNode, 0)
-	head.ApplyInorder(func(n *AVLNode) {
-		if (n == n.U.L){
-
-		} else if n == (n.U.R){
-
+	/*
+		// testing ranged reports
+		file, err := os.Open("test.txt")
+		defer file.Close()
+		if err != nil {
+			log.Fatal(err)
 		}
-		// todo: leaf case
-	})
+
+		// The file.Read() function will happily read a tiny file in to a large
+		// byte slice, but io.ReadFull() will return an
+		// error if the file is smaller than the byte slice.
+		byteSlice := make([]byte, 90)
+		_, err = io.ReadFull(file, byteSlice)
+		if err != nil {
+			log.Fatal(err)
+		}
+		r := mkRope()
+		r.Load(byteSlice)
+		res, err := r.ReportRange(0, 11)
+		if err != nil {
+			return
+		}
+		PrintInline(r.Head)
+		fmt.Printf("/%s/", string(res))
+	*/
+
+	g := mkGapBuf()
+
+	file, err := os.Open("testing.txt")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	ret := make([]byte, 200)
+	_, err = io.ReadFull(file, ret)
+	if err != nil {
+		panic(err)
+	}
+
+	app := make([]rune, len(ret))
+	for i, bt := range ret {
+		app[i] = rune(bt)
+	}
+
+	g.Load(ret[:100])
+	g.Append(app)
+	g.Load(ret)
+
+	//fmt.Println(string(g.GapStart.Next.Content))
+	//fmt.Println(g.Content.Head.Next.Content)
+
+	fmt.Println(g.ToString())
+	res, err := g.Report()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(string(res))
+
+	g.Append(app)
+	fmt.Println()
+	fmt.Println(g.ToString())
+	res, err = g.Report()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(res))
+
 }
-
-func CheckWeight(head)
-
-*/

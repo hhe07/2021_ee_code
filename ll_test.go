@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestInsert(t *testing.T) {
+func TestLInsert(t *testing.T) {
 	t.Log("Traverse To test")
 
 	ll := DoublyLinkedList{Head: nil, End: nil, Length: 0}

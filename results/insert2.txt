@@ -1,0 +1,54 @@
+BenchmarkInsert/*main.AVLRope_insert_80000_const-8         	1000000000	         0.001646 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_80000_const-8       	1000000000	         0.2114 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_160000_const-8        	1000000000	         0.006572 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_160000_const-8      	1000000000	         0.1184 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_240000_const-8        	1000000000	         0.007998 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_240000_const-8      	1000000000	         0.1312 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_320000_const-8        	1000000000	         0.01413 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_320000_const-8      	1000000000	         0.2443 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_400000_const-8        	1000000000	         0.01549 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_400000_const-8      	1000000000	         0.1347 ns/op	       0 B/op	       0 allocs/op
+
+BenchmarkInsert/*main.AVLRope_insert_80000_const-8         	1000000000	         0.001702 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_80000_const-8       	1000000000	         0.1244 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_160000_const-8        	1000000000	         0.003996 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_160000_const-8      	1000000000	         0.1687 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_240000_const-8        	1000000000	         0.005018 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_240000_const-8      	1000000000	         0.1647 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_320000_const-8        	1000000000	         0.01558 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_320000_const-8      	1000000000	         0.2301 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_400000_const-8        	1000000000	         0.01521 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_400000_const-8      	1000000000	         0.1523 ns/op	       0 B/op	       0 allocs/op
+
+BenchmarkInsert/*main.AVLRope_insert_80000_const-8         	1000000000	         0.002137 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_80000_const-8       	1000000000	         0.1539 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_160000_const-8        	1000000000	         0.005588 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_160000_const-8      	1000000000	         0.1799 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_240000_const-8        	1000000000	         0.01000 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_240000_const-8      	1000000000	         0.2129 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_320000_const-8        	1000000000	         0.01566 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_320000_const-8      	1000000000	         0.2046 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_400000_const-8        	1000000000	         0.01806 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_400000_const-8      	1000000000	         0.1200 ns/op	       0 B/op	       0 allocs/op
+
+BenchmarkInsert/*main.AVLRope_insert_80000_const-8         	1000000000	         0.004087 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_80000_const-8       	1000000000	         0.1400 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_160000_const-8        	1000000000	         0.005018 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_160000_const-8      	1000000000	         0.1448 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_240000_const-8        	1000000000	         0.01057 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_240000_const-8      	1000000000	         0.1292 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_320000_const-8        	1000000000	         0.01561 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_320000_const-8      	1000000000	         0.1302 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_400000_const-8        	1000000000	         0.01497 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_400000_const-8      	1000000000	         0.1696 ns/op	       0 B/op	       0 allocs/op
+
+BenchmarkInsert/*main.AVLRope_insert_80000_const-8         	1000000000	         0.002861 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_80000_const-8       	1000000000	         0.1747 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_160000_const-8        	1000000000	         0.003983 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_160000_const-8      	1000000000	         0.1341 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_240000_const-8        	1000000000	         0.005315 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_240000_const-8      	1000000000	         0.1365 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_320000_const-8        	1000000000	         0.01031 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_320000_const-8      	1000000000	         0.1269 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.AVLRope_insert_400000_const-8        	1000000000	         0.01507 ns/op	       0 B/op	       0 allocs/op
+BenchmarkInsert/*main.GapBuffer_insert_400000_const-8      	1000000000	         0.1482 ns/op	       0 B/op	       0 allocs/op

@@ -1,0 +1,5 @@
+.GapBuffer_insert_400000_Start_200000-8,1002999400
+.GapBuffer_insert_400000_Start_200000-8,1028433900
+.GapBuffer_insert_400000_Start_200000-8,1034624900
+.GapBuffer_insert_400000_Start_200000-8,1018702500
+.GapBuffer_insert_400000_Start_200000-8, 335018533

@@ -88,8 +88,6 @@ func (a *AVLNode) updateWeight() {
 	a.Weight = a.L.sumTree()
 }
 
-// todo: for the above to work, make sure that join handles weights properly
-
 func (a *AVLNode) rotateLeft() *AVLNode {
 	/*
 		``a`` is the root of the subtree to be rotated left
@@ -104,7 +102,6 @@ func (a *AVLNode) rotateLeft() *AVLNode {
 	// check that rotation is actually required: disable during testing
 
 	if (z == nil) || (z.L == nil) || (z.R == nil) {
-		// todo: hopefully putting this many conditions in doesn't break anything
 		return a
 	}
 
@@ -141,7 +138,6 @@ func (a *AVLNode) rotateRight() *AVLNode {
 
 	// check that rotation is actually required: disable during testing
 	if (z == nil) || (z.L == nil) || (z.R == nil) {
-		// todo: hopefully putting this many conditions in doesn't break anything
 		return a
 	}
 
@@ -190,7 +186,9 @@ func (a *AVLNode) balance() *AVLNode {
 
 func (a *AVLNode) ToRune() []rune {
 	ret := make([]rune, 0)
-	a.ApplyInorder(func(n *AVLNode) { ret = append(ret, n.Value...) })
+	a.ApplyInorder(func(n *AVLNode) {
+		ret = append(ret, n.Value...)
+	})
 	return ret
 }
 
@@ -213,11 +211,11 @@ func (a *AVLNode) IndexNode(i int) (*AVLNode, int) {
 	if a.isLeaf() && (0 <= i) && (i < len(a.Value)) {
 		return a, i
 	}
-	if a.Weight < i {
+	if a.Weight <= i {
 		// go right
 		return a.R.IndexNode(i - a.Weight)
 	}
-	if a.Weight >= i {
+	if a.Weight > i {
 		// go left
 		return a.L.IndexNode(i)
 	}

@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 )
 
 const (
@@ -114,7 +113,7 @@ func mkRope() *AVLRope {
 	return &AVLRope{}
 }
 
-func (ar *AVLRope) Report(content []rune) ([]rune, error) {
+func (ar *AVLRope) Report() ([]rune, error) {
 	return ar.Head.ToRune(), nil
 }
 
@@ -123,6 +122,10 @@ func (ar *AVLRope) IndexNode(i int) (*AVLNode, int, error) {
 	return node, num, nil
 }
 
+func (ar *AVLRope) Index(i int) (rune, error) {
+	ret, idx, err := ar.IndexNode(i)
+	return ret.Value[idx], err
+}
 func (ar *AVLRope) ReportRange(i, j int) ([]rune, error) {
 	ret := make([]rune, 0)
 	// get start point
@@ -194,13 +197,12 @@ func (ar *AVLRope) Append(content []rune) error {
 	return nil
 }
 
-/*
 func (ar *AVLRope) Split(i int) (StorageType, error) {
 	l, r := Split(ar.Head, i)
 	ar.Head = l
-	return r, nil
+	return &AVLRope{Head: r}, nil
 }
-*/
+
 func (ar *AVLRope) DeleteRange(i, j int) ([]rune, error) {
 	l1, r := Split(ar.Head, j)
 	l2, m := Split(l1, i)
@@ -208,20 +210,38 @@ func (ar *AVLRope) DeleteRange(i, j int) ([]rune, error) {
 	return m.ToRune(), nil
 }
 
+func RoundUpDiv(num, dem int) int {
+	if num%dem == 0 {
+		return num / dem
+	} else {
+		return (num / dem) + 1
+	}
+}
+
 func (ar *AVLRope) LoadFromRune(contents []rune) {
 	// step 1: create the necessary leaves
 
-	leaves := make([]*AVLNode, (len(contents) / Segsize))
+	leaves := make([]*AVLNode, RoundUpDiv(len(contents), Segsize))
+	remLen := len(contents)
+	var data []rune
 	for i := range leaves {
+		if remLen/Segsize >= 1 {
+			data = make([]rune, Segsize)
+			remLen -= Segsize
+		} else {
+			data = make([]rune, remLen)
+		}
 
-		data := make([]rune, Segsize)
 		for r := 0; r < Segsize; r++ {
-			data[r] = contents[(i*Segsize)+r]
+			idx := (i * Segsize) + r
+			if idx >= len(contents) {
+				break
+			}
+			data[r] = contents[idx]
 		}
 		leaves[i] = mkLeaf(data)
 	}
 	// step 2: recursively concat until something resembling balance has been achieved
-	// TODO: check whether current or previous ends up having more allocs: in case slices are being weird
 	for len(leaves) > 1 {
 		half := len(leaves) / 2
 		if len(leaves)%2 == 0 {
@@ -242,22 +262,29 @@ func (ar *AVLRope) LoadFromRune(contents []rune) {
 	ar.Head = leaves[0]
 }
 
-func (ar *AVLRope) Load(contents []byte) {
-	/*
-		TODO: make sure to update this in the Gap load method as well
-		TODO: currently these tests include the file opening time, which is Very Bad.
-		TODO: also make sure that actual memory reallocs are happening because slicing a slice
-		TODO: doesn't create any new memory
-	*/
+func (ar *AVLRope) Load(contents []byte) error {
 
 	// step 1: create the necessary leaves
 
-	leaves := make([]*AVLNode, (len(contents) / Segsize))
+	leaves := make([]*AVLNode, RoundUpDiv(len(contents), Segsize))
+	remLen := len(contents)
+	var data []rune
 	for i := range leaves {
 
-		data := make([]rune, Segsize)
+		if remLen/Segsize >= 1 {
+			data = make([]rune, Segsize) // todo: this isn't very good for allocs, but oh well
+			remLen -= Segsize
+		} else {
+			data = make([]rune, remLen)
+		}
+
 		for r := 0; r < Segsize; r++ {
-			data[r] = rune(contents[(i*Segsize)+r])
+			idx := (i * Segsize) + r
+			if idx >= len(contents) {
+				break
+			}
+			data[r] = rune(contents[idx])
+
 		}
 		leaves[i] = mkLeaf(data)
 	}
@@ -291,7 +318,6 @@ func (ar *AVLRope) Load(contents []byte) {
 		*/
 
 		half := len(leaves) / 2
-		fmt.Println()
 		if len(leaves)%2 == 0 {
 			for r := 0; r < half; r++ {
 				leaves[r] = mkNode(nil, leaves[2*r], leaves[(2*r)+1])
@@ -308,10 +334,19 @@ func (ar *AVLRope) Load(contents []byte) {
 		panic("bad construction")
 	}
 	ar.Head = leaves[0]
+	return nil
 }
 
 func (ar *AVLRope) ToString() string {
 	ret := ""
-	ar.Head.ApplyInorder(func(n *AVLNode) { ret += (string(n.Value) + ",") })
+	ar.Head.ApplyInorder(func(n *AVLNode) { ret += (string(n.Value)) })
 	return ret
+}
+
+func (ar *AVLRope) Concat(s StorageType) error {
+	contents, ok := s.(*AVLRope)
+	if ok {
+		ar.Head = Join(ar.Head, contents.Head)
+	}
+	return nil
 }

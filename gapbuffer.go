@@ -80,6 +80,11 @@ func (g *GapBuffer) getNode(i int) (*DoubleLink, error) {
 	}
 }
 
+func (g *GapBuffer) Index(i int) (rune, error) {
+	ret, err := g.getNode(i)
+	return ret.Content, err
+}
+
 func (g *GapBuffer) Report() ([]rune, error) {
 	// just special case of ReportRange where i = 0 and j = length - 1
 	return g.ReportRange(0, g.Length()-1)
@@ -92,7 +97,8 @@ func (g *GapBuffer) ReportRange(i, j int) ([]rune, error) {
 		return nil, err
 	}
 	if i == j {
-		return nil, errors.New("use ReportCharacter instead")
+		ret, err := g.ReportCharacter(i)
+		return []rune{ret}, err
 	}
 	ret := make([]rune, 0)
 	if g.GapStartIdx == 0 {
@@ -169,6 +175,7 @@ func (g *GapBuffer) Insert(i int, content []rune) error {
 }
 
 func (g *GapBuffer) Append(content []rune) error {
+
 	err := g.moveGap(g.Length())
 	if err != nil {
 		return err
@@ -275,6 +282,9 @@ func (g *GapBuffer) compressGap() error {
 }
 
 func (g *GapBuffer) Split(i int) (StorageType, error) {
+	if i == 0 {
+		return nil, nil
+	}
 	err := g.checkIdxStrict(i)
 	if err != nil || i == 0 {
 		return nil, errors.New("bad split point")
@@ -284,7 +294,7 @@ func (g *GapBuffer) Split(i int) (StorageType, error) {
 	if err != nil {
 		return nil, err
 	}
-	s, err := g.Content.Split(i)
+	s, err := g.Content.Split(i - 1)
 	if err != nil {
 		return nil, err
 	}
@@ -324,22 +334,12 @@ func (g *GapBuffer) DeleteRange(i, j int) ([]rune, error) {
 	return ret, nil
 }
 
-func (g *GapBuffer) Concat(content []rune) error {
-	err := g.Append(content)
-	return err
-}
-
-func (g *GapBuffer) Save(f *FileWrapper) error {
-	return nil
-}
-
-func (g *GapBuffer) Load(f *FileWrapper, ct int) error {
-	bs := f.Open(ct)
+func (g *GapBuffer) Load(contents []byte) error {
 	g.Content = &DoublyLinkedList{
 		Length: 0,
 	}
 	g.GapLen = 0
-	for _, b := range bs {
+	for _, b := range contents {
 		err := g.Content.Insert(g.Length(), rune(b))
 		if err != nil {
 			return err
@@ -361,8 +361,8 @@ func (g *GapBuffer) makeGap() error {
 	g.GapLen = 1
 	g.GapStart = g.Content.Head
 	g.GapEnd = g.Content.Head
-	g.expandGap(9)
 	g.GapStartIdx = 0
+	g.expandGap(9)
 	return nil
 }
 
@@ -380,4 +380,30 @@ func (g *GapBuffer) ToString() string {
 		head = head.Next
 	}
 	return ret
+}
+
+func (gb *GapBuffer) Concat(s StorageType) error {
+	contents, ok := s.(*GapBuffer)
+	if ok {
+		gb.moveGap(0)
+		contents.compressGap()
+		l := contents.Length()
+		gb.Content.End.LinkR(contents.Content.Head)
+		gb.Content.Length += l
+	}
+	return nil
+}
+
+func mkGapBuf() *GapBuffer {
+	return &GapBuffer{
+		Content: &DoublyLinkedList{
+			Head:   nil,
+			End:    nil,
+			Length: 0,
+		},
+		GapStart:    nil,
+		GapEnd:      nil,
+		GapStartIdx: 0,
+		GapLen:      0,
+	}
 }
